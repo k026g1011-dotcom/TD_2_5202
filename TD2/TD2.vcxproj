@@ -168,11 +168,30 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioPlayer.cpp" />
     <ClCompile Include="C:\KamataEngine\Adapter\Novice.cpp" />
+    <ClCompile Include="ClearMenu.cpp" />
+    <ClCompile Include="ClickableComponent.cpp" />
+    <ClCompile Include="Components.cpp" />
+    <ClCompile Include="CreditsMenu.cpp" />
+    <ClCompile Include="CutScene.cpp" />
+    <ClCompile Include="CutScenePlayer.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameLocation.cpp" />
+    <ClCompile Include="GameMenu.cpp" />
+    <ClCompile Include="Hud.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LostMenu.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TitleMenu.cpp" />
+    <ClCompile Include="Ui.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Vector2Int.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DirectXGame\3d\Camera.h" />
+    <ClInclude Include="AudioPlayer.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector2.h" />
@@ -199,6 +218,26 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\DirectXGame\input\Input.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\scene\GameScene.h" />
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
+    <ClInclude Include="ClearMenu.h" />
+    <ClInclude Include="ClickableComponent.h" />
+    <ClInclude Include="Components.h" />
+    <ClInclude Include="CreditsMenu.h" />
+    <ClInclude Include="CutScene.h" />
+    <ClInclude Include="CutsceneFrame.h" />
+    <ClInclude Include="CutScenePlayer.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameLocation.h" />
+    <ClInclude Include="GameMenu.h" />
+    <ClInclude Include="GameTypes.h" />
+    <ClInclude Include="Hud.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="LostMenu.h" />
+    <ClInclude Include="MapConfigs.h" />
+    <ClInclude Include="TitleMenu.h" />
+    <ClInclude Include="Ui.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector2Int.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
