@@ -38,5 +38,10 @@ void CutScenePlayer::StopScene()
 	{
 		m_game->GetUi()->ShowTitleMenu();
 	}
+	if (m_currentCutScene->GetName() == CutScenes::Intro)
+	{
+		m_game->RunStage(1);
+	}
+
 	m_currentCutScene = nullptr;
 }

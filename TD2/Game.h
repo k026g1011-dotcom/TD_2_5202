@@ -7,16 +7,28 @@
 #include "AudioPlayer.h"
 #include "CutScenePlayer.h"
 #include <vector>
+#include "IGameState.h"
+#include <utility>
+#include "IGameState.h"
+#include "MainGameState.h"
+#include "UiGameState.h"
+#include "MiniGameState.h"
+#include "CutSceneGameState.h"
+#include "Minigame.h"
+#include "SealClassificationMiniGame.h"
 class Game
 {
 private:
 	//int m_bgGh;
+	Minigame* currentMinigame_ = nullptr;
 	GameLocation test;
 	GameLocation stage1;
 	GameLocation stage2;
 	GameLocation stage3;
 	GameLocation* m_currentLocation;
 	Input m_input;
+	std::unique_ptr<IGameState> currentState_;
+	std::unique_ptr<IGameState> nextState_;
 	/*	GameLocation m_bosFirstStage;
 		GameLocation m_bossSecondStage;
 		GameLocation m_bossFinalStage;*/
@@ -33,6 +45,8 @@ public:
 	AudioPlayer* GetAudioPlayer();
 	GameLocation* GetCurrentLocation();
 	//int GetBGGh();
+	void ChangeState(std::unique_ptr<IGameState> newState);
+	void HandleInput(const CommandInput& input);
 	void Draw();
 	void Update();
 	void RunStage(int stage);
@@ -40,6 +54,9 @@ public:
 	void Instantiate();
 	void OnNextStage();
 	CutScenePlayer* GetCutscenePlayer();
+	void RunCutScene(CutScenes cutsceneId);
+	void Foo();
+	void EndMinigame();
 };
 
 

@@ -18,5 +18,6 @@ public:
 	void NextFrame();
 	void Draw();
 	void Start();
+	void End();
 };
 

@@ -1,5 +1,7 @@
 #include "Input.h"
 #include "Game.h"
+#include "CommandInput.h"
+
 Input::Input()
 {
 
@@ -10,8 +12,42 @@ Input::Input(Game* game, char(&keysArg)[256], char(&preKeysArg)[256])
 	m_keys = keysArg;
 	m_preKeys = preKeysArg;
 }
+const CommandInput& Input::GetInput() const
+{
+	return currentCommandInput_;
+}
 void Input::Update()
 {
+	currentCommandInput_.isLeftClick_ = false;
+	currentCommandInput_.isSpace_ = false;
+	currentCommandInput_.isW_ = false;
+	currentCommandInput_.isA_ = false;
+	currentCommandInput_.isS_ = false;
+	currentCommandInput_.isD_ = false;
+	if (m_keys[DIK_W] && !m_preKeys[DIK_W] || m_keys[DIK_UP] && !m_preKeys[DIK_UP])
+	{
+		currentCommandInput_.isW_ = true;
+	}
+	if (m_keys[DIK_A] && !m_preKeys[DIK_A] || m_keys[DIK_LEFT] && !m_preKeys[DIK_LEFT])
+	{
+		currentCommandInput_.isA_ = true;
+	}
+	if (m_keys[DIK_S] && !m_preKeys[DIK_S] || m_keys[DIK_DOWN] && !m_preKeys[DIK_DOWN])
+	{
+		currentCommandInput_.isS_ = true;
+	}
+	if (m_keys[DIK_D] && !m_preKeys[DIK_D] || m_keys[DIK_RIGHT] && !m_preKeys[DIK_RIGHT])
+	{
+		currentCommandInput_.isD_ = true;
+	}
+	if ((m_keys[DIK_SPACE] && !m_preKeys[DIK_SPACE]))
+	{
+		currentCommandInput_.isSpace_ = true;
+	}
+	if (Novice::IsTriggerMouse(0))
+	{
+		currentCommandInput_.isLeftClick_ = true;
+	}
 	/*if (m_game != nullptr)
 	{
 		if (m_game->GetUi()->GetCurrentMenu() != nullptr)

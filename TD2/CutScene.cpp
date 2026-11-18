@@ -32,6 +32,10 @@ void CutScene::NextFrame()
 		m_currentCutSceneFrame = m_frames.at(m_currentFrame);
 	}
 }
+void CutScene::End()
+{
+	m_player->StopScene();
+}
 void CutScene::Draw()
 {
 	if (m_currentCutSceneFrame.frameGh != -1)

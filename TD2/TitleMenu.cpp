@@ -52,7 +52,7 @@ void TitleMenu::ClickReceived()
             //GetGame()->GetAudioPlayer()->Play(Music::StartButton);
             //GetGame()->GetUi()->ShowLevelSelectMenu();
             GetGame()->GetUi()->CloseCurrentMenu();
-            GetGame()->RunStage(1);
+            GetGame()->RunCutScene(CutScenes::Intro);
             break;
         case ButtonType::CreditsButton:
             //

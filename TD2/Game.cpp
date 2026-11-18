@@ -2,6 +2,10 @@
 #include "MapConfigs.h"
 #include<Novice.h>
 #include "Ui.h"
+#include <utility>
+#include "IGameState.h"
+#include "SealClassificationMiniGame.h"
+
 Game::Game(char(&keysArg)[256], char(&preKeysArg)[256]) :
 	m_audioPlayer(this),
 	//m_bgGh(Novice::LoadTexture("./resources/images/grid/BG.png")),
@@ -63,27 +67,62 @@ Ui* Game::GetUi()
 {
 	return &m_ui;
 }
+void Game::Foo()
+{
+
+}
 void Game::Update()
 {
+	if (nextState_)
+	{
+		if (currentState_)
+		{
+			currentState_->Exit(*this);
+
+		}
+		currentState_ = std::move(nextState_);
+		currentState_->Enter(*this);
+	}
 	m_input.Update();
-	m_ui.Update();
+	currentState_->HandleInput(*this, m_input.GetInput());
+	currentState_->Update(*this);
+
+
+
+	/*m_ui.Update();
 	if (m_currentLocation && !m_ui.GetCurrentMenu()&&!m_cutscenePlayer.GetCutScene())
 	{
 		m_currentLocation->Update();
-	}
+	}*/
 
 
 	//m_player.Update();
 }
+
+void Game::ChangeState(std::unique_ptr<IGameState> newState)
+{
+	nextState_=std::move(newState);
+}
+
+void Game::HandleInput (const CommandInput& input)
+{
+	currentState_->HandleInput(*this, input);
+}
+
+void Game::EndMinigame()
+{
+	currentMinigame_ = nullptr;
+}
+
 void Game::Draw()
 {
-
-	if (m_currentLocation != nullptr)
+	currentState_->Draw(*this);
+/*	if (m_currentLocation != nullptr)
 	{
 		m_currentLocation->Draw();
 	}
-	m_cutscenePlayer.Draw();
-	m_ui.Draw();
+	
+	m_ui.Draw();*/
 	/*	Novice::ScreenPrintf(0, 0, "angle %f", atan2f(0, 1));
 		Novice::ScreenPrintf(0, 15, "angle %f", atan2f(1, 0));
 		Novice::ScreenPrintf(0, 30, "angle %f", atan2f(0, -1));
@@ -100,41 +139,32 @@ GameLocation* Game::GetCurrentLocation()
 {
 	return m_currentLocation;
 }
+void Game::RunCutScene(CutScenes cutsceneId)
+{
+	ChangeState(std::make_unique<CutSceneGameState>());
+	m_cutscenePlayer.PlayScene(cutsceneId);
+}
 void Game::RunStage(int stage)
 {
 
 	m_currentStageId = stage;
-/*	switch (m_currentStageId)
+
+	switch (m_currentStageId)
 	{
 	case 1:
-		m_cutscenePlayer.PlayScene(CutScenes::Intro);
-		m_currentLocation = &stage1;
-		m_currentLocation->GetWork()->Initialize();
-		m_currentLocation->GetWork()->SetAdditionalLength(1);
-		m_currentLocation->GetWork()->SetTaskCount(MapConfig::kFirstStageTaskCount);
+		//currentMinigame_ = std::make_unique<SealClassificationMiniGame>();
+		ChangeState(std::make_unique<MiniGameState>());
 		break;
 	case 2:
-		m_cutscenePlayer.PlayScene(CutScenes::SecondDayIntro);
-		m_currentLocation = &stage2;
-		m_currentLocation->GetWork()->Initialize();
-		m_currentLocation->GetWork()->SetAdditionalLength(2);
-		m_currentLocation->GetWork()->SwitchTimer(true);
-		m_currentLocation->GetWork()->SetTaskCount(MapConfig::kSecondStageTaskCount);
+		ChangeState(std::make_unique<MiniGameState>());
 		break;
 	case 3:
-		m_cutscenePlayer.PlayScene(CutScenes::ThirdDayIntro);
-		m_currentLocation = &stage3;
-		m_currentLocation->GetWork()->Initialize();
-		m_currentLocation->GetWork()->SetAdditionalLength(3);
-		m_currentLocation->GetWork()->SwitchTimer(true);
-		m_currentLocation->GetWork()->SwitchManual(false);
-		m_currentLocation->GetWork()->SetTaskCount(MapConfig::kThirdStageTaskCount);
+		ChangeState(std::make_unique<MainGameState>());
 		break;
 	default:
-		//m_cutscenePlayer.PlayScene(CutScenes::Intro);
 		m_currentLocation = &test;
 		break;
-	}*/
+	}
 
 }
 

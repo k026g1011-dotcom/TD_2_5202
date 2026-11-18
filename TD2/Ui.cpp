@@ -29,6 +29,7 @@ Hud* Ui::GetHud()
 }
 void Ui::ShowTitleMenu()
 {
+	m_game->ChangeState(std::make_unique<UiGameState>());
 	m_currentMenu = &m_titleMenu;
 	m_game->GetAudioPlayer()->StopBGM();
 	m_game->GetAudioPlayer()->SetBGM(Music::BGM);
